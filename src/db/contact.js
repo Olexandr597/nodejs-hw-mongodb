@@ -1,6 +1,5 @@
-import { Schema } from "mongoose";
-
-import { model } from "mongoose";
+import { Schema } from 'mongoose';
+import { model } from 'mongoose';
 
 const Contact = new Schema({
   name: {
@@ -22,17 +21,9 @@ const Contact = new Schema({
   contactType: {
     type: String,
     required: true,
-    default: "personal",
-    enum: ["work", "personal", "home"],
-  },
-  createdAt: {
-    type: Date,
-    default: Date.now,
-  },
-  updatedAt: {
-    type: Date,
-    default: Date.now,
+    default: 'personal',
+    enum: ['work', 'personal', 'home'],
   },
 });
 
-export const ContactsCollection = model("contacts", Contact);
+export const ContactsCollection = model('contacts', Contact);
