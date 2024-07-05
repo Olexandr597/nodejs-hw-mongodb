@@ -15,18 +15,12 @@ contactsRouter.get(
   ctrlWrapper(getContactByIdController),
 );
 
-// post
-
 contactsRouter.post('/contacts', ctrlWrapper(createContactController));
-
-// patch
 
 contactsRouter.patch(
   '/contacts/:contactsId',
   ctrlWrapper(patchContactController),
 );
-
-// delete
 
 contactsRouter.delete(
   '/contacts/:contactsId',
