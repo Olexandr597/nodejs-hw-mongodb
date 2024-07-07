@@ -1,0 +1,48 @@
+type: object
+required:
+  - _id
+  - name
+  - phoneNumber
+  - contactType
+properties:
+  _id:
+    description: 'Contact`s id'
+    type: string
+    example: 65e4decdd286b30065d54af9
+  name:
+    description: "Contact's name"
+    type: string
+    example: 'Lider'
+  phoneNumber:
+    description: 'Phone number'
+    type: number
+    example: 380000000003
+  email:
+    description: 'Email'
+    type: string
+    example: 'Lider.test@mail.com'
+  isFavourite:
+    description: 'IsFavourite flag'
+    type: boolean
+    example: false
+  contactType:
+    description: 'One of the contact`s type'
+    type: string
+    enum: ['work', 'home', 'personal']
+    example: 'personal'
+  userId:
+    description: "Contact's owner id retrieved from MongoDB on login."
+    type: string
+    example: 65e4decdd286b30065d54af1
+  photo:
+    description: 'Link to contact`s photo'
+    type: string
+    example: <https://res.cloudinary.com/dboilofn1/image/upload/v1719955584/qk6de7dgfbt42ipbsdby.jpg>
+  createdAt:
+    description: "Contact's creation date."
+    type: string
+    example: '2024-07-01T18:49:47.392Z'
+  updatedAt:
+    description: 'Last time contact was updated.'
+    type: string
+    example: '2024-07-01T18:49:47.392Z'
