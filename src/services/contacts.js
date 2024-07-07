@@ -1,6 +1,6 @@
+import { KEYS_OF_CONTACT } from '../constants/constants.js';
 import { ContactsCollection } from '../db/models/contact.js';
 import { calculatePaginationData } from '../utils/calculatePaginationData.js';
-import { KEYS_OF_CONTACT } from '../constants/constants.js';
 
 export const getAllContacts = async ({
   page,
@@ -8,6 +8,7 @@ export const getAllContacts = async ({
   sortBy,
   sortOrder,
   filter,
+  userId,
 }) => {
   const limit = perPage;
   const skip = (page - 1) * perPage;
@@ -20,10 +21,12 @@ export const getAllContacts = async ({
       .equals(filter.contactType);
   }
   if (filter.isFavourite) {
-    // contactsFilters.where('isFavourite').equals(filter.isFavourite);
     contactsFilters
       .where(KEYS_OF_CONTACT.isFavourite)
       .equals(filter.isFavourite);
+  }
+  if (userId) {
+    contactsFilters.where('userId').equals(userId);
   }
 
   const [totalItems, contacts] = await Promise.all([
@@ -46,25 +49,25 @@ export const getAllContacts = async ({
   };
 };
 
-export const getContactById = async (contactId) =>
-  await ContactsCollection.findById(contactId);
-
-export const createContact = async (payload) =>
-  await ContactsCollection.create(payload);
-
-export const updateContact = async (contactId, payload) => {
-  const updatedContact = await ContactsCollection.findByIdAndUpdate(
-    contactId,
-    payload,
-    { new: true },
-  );
-
-  return updatedContact;
+export const getContactById = async (contactId, userId) => {
+  return await ContactsCollection.findOne({ _id: contactId, userId: userId });
 };
 
-export const deleteContact = async (contactId) => {
+export const createContact = async (payload, userId) =>
+  await ContactsCollection.create({ ...payload, userId: userId });
+
+export const updateContact = async (contactId, userId, updateData) => {
+  return await ContactsCollection.findOneAndUpdate(
+    { _id: contactId, userId: userId },
+    updateData,
+    { new: true },
+  );
+};
+
+export const deleteContact = async (contactId, userId) => {
   const contact = await ContactsCollection.findOneAndDelete({
     _id: contactId,
+    userId: userId,
   });
 
   return contact;
